@@ -21,11 +21,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.hero-image {
 				width: 100%;
+				display: flex;
+				justify-content: center;
 			}
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
 				border-radius: 12px;
+				border-radius: 50%; /* Make the image circular */
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
@@ -59,7 +62,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && <img width={250} height={250} src={heroImage} alt="" />}
 				</div>
 				<div class="prose">
 					<div class="title">
