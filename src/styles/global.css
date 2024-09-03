@@ -44,6 +44,7 @@ body {
 }
 main {
 	width: 720px;
+	min-height: calc(100vh - 200px); 
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
