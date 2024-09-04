@@ -2,6 +2,7 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import GoogleAnalytics from './support/GoogleAnalytics.astro';
 
 interface Props {
 	title: string;
@@ -59,3 +60,5 @@ data-color="#FF5F5F"
 data-position="Right"
 data-x_margin="18"
 data-y_margin="18"></script>
+
+<GoogleAnalytics/>

@@ -3,3 +3,4 @@
 
 export const SITE_TITLE = 'Shin McCold';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const GOOGLE_ANALYTICS_ID = 'G-426M8D073B';
