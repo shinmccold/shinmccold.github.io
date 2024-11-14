@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevSmith Utils</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+        }
+
+        /* Sidebar styling */
+
+		.sidebar {
+			width: 250px;
+			background: linear-gradient(
+				180deg,
+				#252526 0%,
+				#1E1E1E 100%
+			);
+			color: #CCCCCC;
+			padding: 20px;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
+		}
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: #ecf0f1;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            margin-bottom: 15px;
+        }
+
+        .menu-item button {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            text-align: left;
+            padding: 10px 5px;
+            width: 100%;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item button:hover,
+        .menu-item button.active {
+            background-color: #34495e;
+            border-radius: 8px;
+        }
+
+        .submenu {
+            margin-top: 8px;
+            display: none;
+            flex-direction: column;
+            padding-left: 20px;
+        }
+
+        .submenu a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 5px;
+        }
+
+        .submenu a:hover {
+            background-color: #3d566e;
+            color: #ecf0f1;
+        }
+
+        .icon {
+            font-size: 16px;
+            color: #ecf0f1;
+        }
+
+        /* Main content styling */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .button-group button {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-group .active {
+            background-color: #333;
+            color: white;
+        }
+
+        .input-area, .output-area {
+            margin-top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .convert-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+		.search-container {
+			position: relative;
+			margin-bottom: 15px;
+		}
+
+		.search-input {
+			width: 100%;
+			padding: 6px 30px 6px 10px;
+			background-color: #3C3C3C;
+			border: 1px solid #3C3C3C;
+			border-radius: 4px;
+			color: #CCCCCC;
+			font-size: 13px;
+		}
+
+		.search-input:focus {
+			outline: 1px solid #007FD4;
+			border-color: #007FD4;
+		}
+
+		.search-input::placeholder {
+			color: #909090;
+		}
+
+		.search-icon {
+			position: absolute;
+			right: 8px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #909090;
+			pointer-events: none;
+		}
+
+        .footer {
+            background: #1E1E1E;
+            color: #CCCCCC;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer span {
+            color: #FF5F5F;
+        }
+
+        .footer a {
+            color: #CCCCCC;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+    <script
+    data-name="BMC-Widget"
+    data-cfasync="false"
+    src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="shinmccold"
+    data-description="Support me on Buy me a coffee!"
+    data-message="Enjoying this? ☕ Tip me a coffee!"
+    data-color="#FF5F5F"
+    data-position="Right"
+    data-x_margin="18"
+    data-y_margin="18"></script>
+
+    <script src="/libs/js-yaml.min.js"></script>
+    <script>
+        let conversionType = 'jsonToYaml';
+        let utilActionType = '';
+
+        /**
+         * Sets the conversion type and updates the UI to reflect the selected conversion type.
+         * @param {string} type - The type of conversion ('jsonToYaml' or 'yamlToJson').
+         */
+        function setConversionType(type) {
+            showConverter('json-yaml');
+
+            conversionType = type;
+            document.getElementById('jsonToYaml').classList.toggle('active', type === 'jsonToYaml');
+            document.getElementById('yamlToJson').classList.toggle('active', type === 'yamlToJson');
+        }
+
+        /**
+         * Converts the input text based on the selected conversion type (JSON to YAML or YAML to JSON).
+         */
+        function convert() {
+            const inputText = document.getElementById('inputText').value;
+            let outputText = '';
+
+            try {
+                if (conversionType === 'jsonToYaml') {
+                    const jsonObj = JSON.parse(inputText);
+                    outputText = jsyaml.dump(jsonObj);
+                } else {
+                    const yamlObj = jsyaml.load(inputText);
+                    outputText = JSON.stringify(yamlObj, null, 2);
+                }
+            } catch (error) {
+                outputText = 'Error: ' + error.message;
+            }
+
+            document.getElementById('outputText').value = outputText;
+        }
+
+        /**
+         * Toggles the visibility of a submenu.
+         * @param {string} menuId - The ID of the submenu to toggle.
+         */
+        function toggleMenu(menuId) {
+            const submenu = document.getElementById(menuId);
+            submenu.style.display = submenu.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        /**
+         * Shows the specified converter container and hides the others.
+         * @param {string} type - The type of converter to show ('json-yaml' or 'string-escape').
+         */
+        function showConverter(type, actionType) {
+            // Hide all containers
+            document.getElementById('json-yaml-container').style.display = 'none';
+            document.getElementById('string-escape-container').style.display = 'none';
+            
+            // Show selected container
+            if (type === 'string-escape') {
+                console.debug(`Converter: ${type}, UtilAction: ${actionType}`);
+          
+
+                if(actionType === undefined)
+                {
+                    utilActionType = "unescapeString";
+                }
+                else{
+                    utilActionType = actionType;
+                }
+
+                document.getElementById('stringToEscape').classList.toggle('active', utilActionType === 'unescapeString');
+                document.getElementById('escapeToString').classList.toggle('active', utilActionType === 'escapeString');
+
+                document.getElementById('string-escape-container').style.display = 'block';
+            } else if (type === 'json-yaml') {
+                document.getElementById('json-yaml-container').style.display = 'block';
+            }
+        }
+
+        /** Section Splitter - Utils  **/
+        function convertString() {
+            const inputText = document.getElementById('string-util-inputText').value;
+            let outputText = '';
+
+            try {
+                if (utilActionType === 'escapeString') {
+                    outputText = escapeString(inputText);
+                } else if (utilActionType === 'unescapeString') {
+                    outputText = unescapeString(inputText);
+                }
+            } catch (error) {
+                outputText = 'Error: ' + error.message;
+            }
+
+            document.getElementById('string-util-outputText').value = outputText;
+        }
+
+        // Utils Functions - String
+        function escapeString(str) {
+            return str
+                .replace(/\\/g, '\\\\')     // Escape backslashes
+                .replace(/\n/g, '\\n')      // Line breaks
+                .replace(/\r/g, '\\r')      // Carriage returns
+                .replace(/\t/g, '\\t')      // Tabs
+                .replace(/\f/g, '\\f')      // Form feeds
+                .replace(/'/g, "\\'")       // Single quotes
+                .replace(/"/g, '\\"')       // Double quotes
+                // .replace(/\b/g, '\\b')      // Backspace
+                .replace(/\v/g, '\\v');     // Vertical tabs
+        }
+
+        function unescapeString(str) {
+            return str
+                .replace(/\\n/g, '\n')      // Line breaks
+                .replace(/\\r/g, '\r')      // Carriage returns
+                .replace(/\\t/g, '\t')      // Tabs
+                .replace(/\\f/g, '\f')      // Form feeds
+                .replace(/\\'/g, "'")       // Single quotes
+                .replace(/\\"/g, '"')       // Double quotes
+                .replace(/\\b/g, '\b')      // Backspace
+                .replace(/\\v/g, '\v')      // Vertical tabs
+                .replace(/\\\\/g, '\\');    // Backslashes (do this last)
+        }
+
+        // Initialize with the menus open
+        // document.getElementById('converters').style.display = 'flex';
+        // document.getElementById('formatters').style.display = 'none';
+        // document.getElementById('encoders-decoders').style.display = 'none';
+        // document.getElementById('generators').style.display = 'none';
+        // document.getElementById('utils').style.display = 'none';
+    </script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dev Utils</h2>
+        
+		<div class="search-container">
+			<input type="text" placeholder="Search..." class="search-input">
+			<svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="11" cy="11" r="8"></circle>
+				<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+			</svg>
+		</div>
+
+        <div class="menu-item">
+            <button onclick="toggleMenu('converters')">
+                <span class="icon">🔄</span> Converters
+            </button>
+            <div id="converters" class="submenu">
+                <a href="#" class="active"  onclick="showConverter('json-yaml')"><span class="icon">↔️</span> JSON ⇔ YAML</a>
+                <a href="#" onclick="showConverter('json-yaml')"><span class="icon">↔️</span> JSON ⇔ XML</a>
+            </div>
+        </div>
+        
+        <div class="menu-item">
+            <button onclick="toggleMenu('formatters')">
+                <span class="icon">📑</span> Formatters
+            </button>
+            <div id="formatters" class="submenu">
+                <a href="#"><span class="icon">📄</span> Code Formatter</a>
+                <a href="#"><span class="icon">📄</span> JSON Formatter</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <button onclick="toggleMenu('encoders-decoders')">
+                <span class="icon">🔤</span> Encoders & Decoders
+            </button>
+            <div id="encoders-decoders" class="submenu">
+                <a href="#"><span class="icon">🔑</span> Base64 Encoder</a>
+                <a href="#"><span class="icon">🔑</span> URL Decoder</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <button onclick="toggleMenu('generators')">
+                <span class="icon">⚙️</span> Generators
+            </button>
+            <div id="generators" class="submenu">
+                <a href="#"><span class="icon">🆔</span> UUID Generator</a>
+                <a href="#"><span class="icon">🔒</span> Password Generator</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <button onclick="toggleMenu('utils')">
+                <span class="icon">🔧</span> Utils
+            </button>
+            <div id="utils" class="submenu">
+                <a href="#" onclick="showConverter('string-escape')"><span class="icon">\🇳</span> String Unescaper</a>
+                <a href="#" onclick="showConverter('string-escape')"><span class="icon">/🇳</span> String Escaper</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div id="json-yaml-container" class="container">
+            <h1>JSON ⇔ YAML Converter</h1>
+            
+            <div class="button-group">
+                <button id="jsonToYaml" class="active" onclick="setConversionType('jsonToYaml')">JSON to YAML</button>
+                <button id="yamlToJson" onclick="setConversionType('yamlToJson')">YAML to JSON</button>
+            </div>
+
+            <div class="input-area">
+                <textarea id="inputText" placeholder="Enter your input here"></textarea>
+            </div>
+
+            <button class="convert-button" onclick="convert()">Convert</button>
+
+            <div class="output-area">
+                <textarea id="outputText" placeholder="Output" readonly></textarea>
+            </div>
+        </div>
+
+        <div id="string-escape-container" class="container" style="display: none">
+            <h1>String Escape ⇔ Unescape</h1>
+            
+            <div class="button-group">
+                <button id="stringToEscape" class="active" onclick="showConverter('string-escape', 'unescapeString')">Slash-String Unscaper</button>
+                <button id="escapeToString" onclick="showConverter('string-escape', 'escapeString' )">Slash-String Escaper</button>
+            </div>
+        
+            <div class="input-area">
+                <textarea id="string-util-inputText" placeholder="Enter your string here"></textarea>
+            </div>
+        
+            <button class="convert-button" onclick="convertString()">Convert</button>
+        
+            <div class="output-area">
+                <textarea id="string-util-outputText" placeholder="Output" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Made with <span>❤</span> by <a href="https://x.com/shinmccold1" target="_blank">Shin McCold</a>
+    </div>
+  
+</body>
+</html>
