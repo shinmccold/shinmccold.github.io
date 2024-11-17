@@ -1,64 +1,93 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
+import { getImage } from 'astro:assets'
+import brandSrc from '@images/brand_logo.jpeg'
+import faviconSvgSrc from '@images/favicon_icon.svg'
+import faviconSrc from '@images/favicon_icon.png'
+import { SEO, SITE } from '@/config'
 import '../styles/global.css';
-import GoogleAnalytics from './support/GoogleAnalytics.astro';
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string;
+    title: string
+    description: string
+    ogImage?: any
+    ogTitle?: string
+    ogDescription?: string
+    structuredData?: object
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = Astro.url.href
+let {
+    title,
+    description,
+    ogImage,
+    ogTitle = title,
+    ogDescription = description,
+    structuredData = SEO.structuredData,
+} = Astro.props
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+let card = 'summary_large_image'
+if (!ogImage) {
+    ogImage = brandSrc
+    card = 'summary'
+}
+
+const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' })
+const appleTouchIcon = await getImage({ src: faviconSrc, width: 180, height: 180, format: 'png' })
+const socialImageRes = await getImage({ src: ogImage, width: 1200, height: 600 })
+
+let socialImage = socialImageRes.src
+if (!socialImage.startsWith('http')) {
+    socialImage = Astro.url.origin + socialImageRes.src
+}
 ---
 
+<!-- Inject structured data https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data -->
+{
+    structuredData && (
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify(structuredData)}
+        />
+    )
+}
+
 <!-- Global Metadata -->
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="generator" content={Astro.generator} />
-
-<!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
-
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
-<title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta charset="utf-8" />
+<meta name="web_author" content={SITE.author} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#facc15" />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:image" content={socialImage} />
+<meta content="1200" property="og:image:width" />
+<meta content="600" property="og:image:height" />
+<meta content="image/png" property="og:image:type" />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:card" content={card} />
 <meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:domain" content={Astro.url} />
+<meta property="twitter:title" content={ogTitle} />
+<meta property="twitter:description" content={ogDescription} />
+<meta property="twitter:image" content={socialImage} />
 
-
-
-<script
-data-name="BMC-Widget"
-data-cfasync="false"
-src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-data-id="shinmccold"
-data-description="Support me on Buy me a coffee!"
-data-message="Enjoying this? ☕ Tip me a coffee!"
-data-color="#FF5F5F"
-data-position="Right"
-data-x_margin="18"
-data-y_margin="18"></script>
-
-<GoogleAnalytics/>
+<!-- Links -->
+<link href={canonicalURL} rel="canonical" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<!--<link href="/manifest.json" rel="manifest" />-->
+<link href="/favicon.ico" rel="icon" sizes="any" type="image/x-icon" />
+<link href={faviconSvg.src} rel="icon" type="image/svg+xml" sizes="any" />
+<link href={appleTouchIcon.src} rel="apple-touch-icon" />
+<link href={appleTouchIcon.src} rel="shortcut icon" />

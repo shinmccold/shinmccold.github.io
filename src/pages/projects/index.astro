@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from '@layouts/BaseLayout.astro'
+import ProjectSelectedArticle from '@components/blog/ProjectSelectedArticle.astro'
+import { SITE } from '@/config'
+
+const projects: CollectionEntry<'projects'>[] = (await getCollection('projects')).sort(
+    (a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+)
+
+const selectedProjects: CollectionEntry<'projects'>[] = projects.filter(p => p.data.projectSelected)
+const description = 'Here are some projects that I believes are not bad, hope you enjoy them.'
+const URL = Astro.url.href
+---
+
+<BaseLayout
+    title="All Projects"
+    description={description}
+    structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        'inLanguage': 'en-US',
+        '@id': URL,
+        'url': URL,
+        'name': `All Projects - ${SITE.title}`,
+        'description': description,
+        'isPartOf': {
+            '@type': 'WebSite',
+            'url': SITE.url,
+            'name': SITE.title,
+            'description': SITE.description,
+        },
+    }}
+>
+
+    <ProjectSelectedArticle projects={selectedProjects} />
+</BaseLayout>
+

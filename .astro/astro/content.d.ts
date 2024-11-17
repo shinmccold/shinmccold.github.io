@@ -4,6 +4,7 @@ declare module 'astro:content' {
 			Content: import('astro').MarkdownInstance<{}>['Content'];
 			headings: import('astro').MarkdownHeading[];
 			remarkPluginFrontmatter: Record<string, any>;
+			components: import('astro').MDXInstance<{}>['components'];
 		}>;
 	}
 }
@@ -150,48 +151,99 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		"blog": {
-"first-post.md": {
-	id: "first-post.md";
-  slug: "first-post";
+		"categories": {
+"algorithm.md": {
+	id: "algorithm.md";
+  slug: "algorithm";
   body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
+  collection: "categories";
+  data: InferEntrySchema<"categories">
 } & { render(): Render[".md"] };
-"markdown-style-guide.md": {
-	id: "markdown-style-guide.md";
-  slug: "markdown-style-guide";
+"backend.md": {
+	id: "backend.md";
+  slug: "backend";
   body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
+  collection: "categories";
+  data: InferEntrySchema<"categories">
 } & { render(): Render[".md"] };
-"second-post.md": {
-	id: "second-post.md";
-  slug: "second-post";
+"books.md": {
+	id: "books.md";
+  slug: "books";
   body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
+  collection: "categories";
+  data: InferEntrySchema<"categories">
 } & { render(): Render[".md"] };
-"third-post.md": {
-	id: "third-post.md";
-  slug: "third-post";
+"java.md": {
+	id: "java.md";
+  slug: "java";
   body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
+  collection: "categories";
+  data: InferEntrySchema<"categories">
 } & { render(): Render[".md"] };
-"using-mdx.mdx": {
-	id: "using-mdx.mdx";
-  slug: "using-mdx";
+"life.md": {
+	id: "life.md";
+  slug: "life";
   body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".mdx"] };
+  collection: "categories";
+  data: InferEntrySchema<"categories">
+} & { render(): Render[".md"] };
+"rust.md": {
+	id: "rust.md";
+  slug: "rust";
+  body: string;
+  collection: "categories";
+  data: InferEntrySchema<"categories">
+} & { render(): Render[".md"] };
+"tech.md": {
+	id: "tech.md";
+  slug: "tech";
+  body: string;
+  collection: "categories";
+  data: InferEntrySchema<"categories">
+} & { render(): Render[".md"] };
+"tool.md": {
+	id: "tool.md";
+  slug: "tool";
+  body: string;
+  collection: "categories";
+  data: InferEntrySchema<"categories">
+} & { render(): Render[".md"] };
+"ui.md": {
+	id: "ui.md";
+  slug: "ui";
+  body: string;
+  collection: "categories";
+  data: InferEntrySchema<"categories">
+} & { render(): Render[".md"] };
+};
+"posts": {
+"About-shinmccold.md": {
+	id: "About-shinmccold.md";
+  slug: "about-shinmccold";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+};
+"projects": {
+"project-neo.md": {
+	id: "project-neo.md";
+  slug: "project-neo";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
 };
 
 	};
 
 	type DataEntryMap = {
-		
+		"friends": Record<string, {
+  id: string;
+  collection: "friends";
+  data: InferEntrySchema<"friends">;
+}>;
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

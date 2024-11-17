@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/friends",
+  "definitions": {
+    "friends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "social": {
+            "type": "object",
+            "properties": {
+              "twitter": {
+                "type": "string"
+              },
+              "blog": {
+                "type": "string"
+              },
+              "github": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "title",
+          "name",
+          "description",
+          "avatar",
+          "social"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
