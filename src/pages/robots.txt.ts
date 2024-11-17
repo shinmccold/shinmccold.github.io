@@ -5,17 +5,14 @@ const robotsTxt = `
 User-agent: Googlebot
 Disallow:
 Allow: /
-Crawl-delay: 10
 
 User-agent: Yandex
 Disallow:
 Allow: /
-Crawl-delay: 2
 
 User-agent: archive.org_bot
 Disallow:
 Allow: /
-Crawl-delay: 2
 
 User-agent: *
 Allow: /
