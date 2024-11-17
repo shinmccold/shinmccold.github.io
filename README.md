@@ -22,4 +22,5 @@ Backend software engineer 💻 skilled in **Java** and **Python**, currently wor
 Website 🌐: [https://shinmccold.github.io/](https://shinmccold.github.io/)  
 Twitter 🗙: [@shinmccold1](https://x.com/shinmccold1)
 
+
 Thank you for visiting my website!
