@@ -87,6 +87,7 @@ async function publishToHashnode(title: string, contentMarkdown: string) {
 async function checkForChanges() {
     const git = simpleGit();
     const status = await git.status();
+    logger.info('All files:' + JSON.stringify(status.files, null, 2));
     const changedFiles = status.files
         .filter(
             (file) =>
