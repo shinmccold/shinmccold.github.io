@@ -7,6 +7,7 @@ import partytown from '@astrojs/partytown'
 import { SITE } from './src/config.ts'
 import { remarkReadingTime } from './src/support/plugins.ts'
 import { uploadAssetsToS3 } from './src/support/uploader.ts'
+import { publishToHashnodeIntegration } from './src/support/publishToHashnode.ts'
 
 export default defineConfig({
     site: SITE.url,
@@ -30,6 +31,7 @@ export default defineConfig({
             Logger: 2,
         }),
         uploadAssetsToS3(),
+        publishToHashnodeIntegration(),
     ],
     markdown: {
         remarkPlugins: [remarkReadingTime],
