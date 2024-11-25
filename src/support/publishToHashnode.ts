@@ -109,17 +109,20 @@ export function publishToHashnodeIntegration(): AstroIntegration {
         name: "publish-to-hashnode",
         hooks: {
             "astro:build:done": async () => {
-                logger.info("Checking for changes in content/posts...");
 
                 try {
+                    
+                    logger.info("Checking for changes in content/posts...");
+                    const changedFiles = await checkForChanges();
+
                     if (HASHNODE_API_TOKEN === "no-hashnode") {
                         logger.warn(
                             "HASHNODE_API_TOKEN is not set. Skipping publishing to Hashnode.",
                         );
                         return;
                     }
-                    const changedFiles = await checkForChanges();
-
+                    
+                    logger.info("Changed files:", changedFiles.length? changedFiles.length: "No files changed");
                     for (const filePath of changedFiles) {
                         logger.info(`File changed/add: ${filePath}`);
 
