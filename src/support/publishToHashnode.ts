@@ -143,10 +143,10 @@ export function publishToHashnodeIntegration(): AstroIntegration {
                     }
                     
                     logger.info("Changed files:", changedFiles.length? changedFiles.length: "No files changed");
-                    for (const filePath of changedFiles) {
-                        logger.info(`File changed/add: ${filePath}`);
+                    for (const changedFile of changedFiles) {
+                        logger.info(`File changed/add: ${JSON.stringify(changedFile)}`);
 
-                        const fileContent = fs.readFileSync(filePath, "utf-8");
+                        const fileContent = fs.readFileSync(changedFile.path, "utf-8");
                         const { frontmatter, content } =
                             extractFrontmatterAndContent(fileContent);
 
