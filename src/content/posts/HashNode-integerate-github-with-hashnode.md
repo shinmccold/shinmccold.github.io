@@ -43,13 +43,13 @@ Output :
 M posts/AboutMe-shinmccold.md
 ```
 
-Wolah ! I got the changes and now I can publish the blog in Hashnode.  
+Voila ! I got the changes and now I can publish the blog in Hashnode.  
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWM2b2d2cGhrbG04M3Zydzd3ODlmOThoNXluYjJzMXd5b3p3anR3aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26ufdipQqU2lhNA4g/giphy.gif" alt="wow GIF" width="200" height="200">
 
 So I wrote a script to detect changes and publish the blog in Hashnode.
 
 
-> Note: Special thanks for my friend how is expert in Git and Gerrit, who quickly gave the solution for this that even AI couldn't give me.🙌
+> Note: Special thanks to my friend who is an expert in Git and Gerrit, who quickly gave the solution for this that even AI couldn't give me. 🙌
 
 
 ## Connect With Me
