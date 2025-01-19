@@ -29,7 +29,7 @@ btw this was the API I used to publish the blog in Hashnode :
 ![Hashnode API](@images/posts/hashnode/hashnode-api.png)
 
 Now step 1 and step 2 are pretty easy. I can use Github actions to detect file changes and publish the blog in Hashnode, but I didn't wanted to use Github actions because it was again time consuming.
-
+ 
 So I thought why not use astro's post processing, where in after the project is built I can run a script to publish the blog in Hashnode.
 
 But for this to happen I needed a way to detect changes and the only way was to compare it with previous change and check if the file was added or modified (assuming hashnode will take care of it since only title is required to for uniqueness I guess).
