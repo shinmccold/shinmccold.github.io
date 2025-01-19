@@ -18,7 +18,7 @@ While I have some preferred tools, I always choose the best one for the job, eve
 
 To learn more about my work and thoughts, you can browse my [featured articles](https://shinmccold.github.io/posts#selected-articles).
 > Note: I write all my blog posts using Coffee, with no AI assistance.
-
+  
 
 ## Connect With Me
 * Github: [@shinmccold](github.com/shinmccold)
