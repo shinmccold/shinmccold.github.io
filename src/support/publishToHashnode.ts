@@ -154,7 +154,7 @@ export function publishToHashnodeIntegration(): AstroIntegration {
                             frontmatter.title,
                             content,
                         );
-                        logger.info(`Post published: ${result}`);
+                        logger.info(`Post published: ${JSON.stringify(result)}`);
                     }
                 } catch (error) {
                     logger.error(
