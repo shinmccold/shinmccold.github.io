@@ -27,10 +27,10 @@ function extractFrontmatterAndContent(fileContent: string) {
     const normalizedContent = fileContent.replace(/\r\n/g, '\n');
     
     // Updated regex to handle normalized line endings
-    const frontmatterRegex = /^---\r\n([\s\S]+?)\r\n---/;
+    const frontmatterRegex = /^---\n([\s\S]+?)\n---/;
     const match = normalizedContent.match(frontmatterRegex);
     if (!match) {
-        logger.error('Content start:', normalizedContent);
+        logger.error('Content start:'+ normalizedContent);
         throw new Error("Invalid markdown file: missing frontmatter");
     }
 
