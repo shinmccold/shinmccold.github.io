@@ -21,7 +21,7 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Needed for git diff
+          fetch-depth: 2 # Needed for git diff
           fetch-tags: true  # Get all tags
       - name: Install, build, and upload your site
         uses: withastro/action@v2
