@@ -23,14 +23,19 @@ const logger = winston.createLogger({
 
 // Function to extract frontmatter and content from markdown file
 function extractFrontmatterAndContent(fileContent: string) {
+    // Normalize line endings first
+    const normalizedContent = fileContent.replace(/\r\n/g, '\n');
+    
+    // Updated regex to handle normalized line endings
     const frontmatterRegex = /^---\r\n([\s\S]+?)\r\n---/;
-    const match = fileContent.match(frontmatterRegex);
+    const match = normalizedContent.match(frontmatterRegex);
     if (!match) {
+        logger.error('Content start:', normalizedContent);
         throw new Error("Invalid markdown file: missing frontmatter");
     }
 
     const frontmatter = match[1];
-    const content = fileContent.slice(match[0].length);
+    const content = normalizedContent.slice(match[0].length);
 
     const frontmatterLines = frontmatter.split("\n");
     const frontmatterData: Record<string, string> = {};
