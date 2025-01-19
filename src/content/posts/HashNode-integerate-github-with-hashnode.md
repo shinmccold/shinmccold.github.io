@@ -15,7 +15,7 @@ I always wanted one place to write my blogs and publish them everywhere like on 
 So, I thought why not automate it ?   
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWRleHZxMjNxemhlNzgybWh3dG11MXN0Z3p1OGU0MXNqM3A1ZmFreiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1nR6fu93A17vWZbO9c/giphy.gif" alt="Automate GIF" width="350" height="200">
 
-Since I am comfortable with Markdowns, and all I have to do is write in markdown its quite easier for me to maintain this single blog site.
+Since I am comfortable with Markdowns, and all I have to do is write in markdown its quite easier for me to maintain this single blog site.  
 
 Now all I have to do is figure out a way to publish in Hashnode.
 Hashnode is pretty cool 😎 and I love the community there. It has the api's to publish blogs.
