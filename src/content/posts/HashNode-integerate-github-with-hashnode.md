@@ -26,7 +26,7 @@ So here's the overall idea 💡:
 3. Publish the blog in Hashnode using Hashnode API.
 
 btw this was the API I used to publish the blog in Hashnode : 
-![alt text](@images/posts/hashnode/hashnode-api.png)
+![Hashnode API](@images/posts/hashnode/hashnode-api.png)
 
 Now step 1 and step 2 are pretty easy. I can use Github actions to detect file changes and publish the blog in Hashnode, but I didn't wanted to use Github actions because it was again time consuming.
 
