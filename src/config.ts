@@ -12,7 +12,7 @@ export const NavigationLinks: NavigationLink[] = [
     { name: 'Home', url: '/' },
     { name: 'Projects', url: '/projects' },
     { name: 'Timeline', url: '/timeline' },
-    { name: 'Posts', url: '/posts' },
+    { name: 'Blogs', url: '/posts' },
     { name: 'Category', url: '/categories' },
     { name: 'About', url: '/posts/about-shinmccold' },
 ]
