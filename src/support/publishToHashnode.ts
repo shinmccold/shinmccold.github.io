@@ -85,23 +85,42 @@ async function publishToHashnode(title: string, contentMarkdown: string) {
 
 // Function to check for added or modified files using Git
 async function checkForChanges() {
-    const git = simpleGit();
-    const status = await git.status();
-    logger.info('All files:' + JSON.stringify(status.files, null, 2));
-    const changedFiles = status.files
-        .filter(
-            (file) =>
-                file.index === "A" ||
-                file.index === "M" ||
-                file.working_dir === "A" ||
-                file.working_dir === "M",
-        )
-        .map((file) => path.join(process.cwd(), file.path))
-        .filter((filePath) =>
-            filePath.startsWith(path.join(process.cwd(), "src/content/posts")),
-        );
+    try {
+        const git = simpleGit();
+        
+        // Get diff between last two commits
+        const diffResult = await git.raw(['diff', 'HEAD^', 'HEAD', '--name-status']);
+        
+        console.log("Diff result:" + diffResult);
+        // Parse tab-separated status and filename
+        const changedFiles = diffResult
+            .split('\n')
+            .filter(Boolean)
+            .map(line => {
+                // Split on multiple spaces or tabs
+                console.log("Line:", line);
+                console.log("Split:", line.trim().split(/[\s\t]+/));
+                const [modifyType, ...pathParts] = line.trim().split(/[\s\t]+/);
+                const filePath = pathParts.join(' '); // Rejoin path parts in case of spaces
+                
+                console.log('File path:', filePath);
+                return {
+                    path: filePath,
+                    index: ' ', // Placeholder as diff doesn't provide index status
+                    working_dir: modifyType
+                };
+            })
+            .filter(file => 
+                file.path.startsWith('src/content/posts/') && 
+                file.working_dir === 'M'
+            );
 
-    return changedFiles;
+        logger.info('Changed content files:' + JSON.stringify(changedFiles));
+        return changedFiles;
+    } catch (error) {
+        logger.error('Error parsing git diff:', error);
+        return [];
+    }
 }
 
 // Astro integration to watch for changes and publish to Hashnode
