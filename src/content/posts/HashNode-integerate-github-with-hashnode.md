@@ -3,7 +3,7 @@ title: "Write once, publish everywhere: Integrate Github pages with Hashnode blo
 description: "Integrate Github pages with Hashnode blogs"
 pubDate: "2025-01-19 20:00:48"
 category: "tech"
-banner: "@images/banners/about_me_banner.png"
+banner: "@images/posts/hashnode/hashnode-api.png"
 tags: ["tech"]
 selected: true
 oldViewCount: 1

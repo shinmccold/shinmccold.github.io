@@ -8,13 +8,14 @@ import { SITE } from './src/config.ts'
 import { remarkReadingTime } from './src/support/plugins.ts'
 import { uploadAssetsToS3 } from './src/support/uploader.ts'
 import { publishToHashnodeIntegration } from './src/support/publishToHashnode.ts'
+import { passthroughImageService } from 'astro/config';
 
 export default defineConfig({
     site: SITE.url,
     image: {
         // If you don't want to optimize images during the BUILD process,
         // you can open this comment. It will significantly reduce the build time but won't optimize any images anymore.
-        // service: passthroughImageService(),
+        service: passthroughImageService(),
     },
     integrations: [
         partytown(),
@@ -54,6 +55,6 @@ export default defineConfig({
         // see https://docs.astro.build/en/reference/configuration-reference/#buildassets
         assets: 'assets',
         // see https://docs.astro.build/en/reference/configuration-reference/#buildassetsprefix
-        assetsPrefix: process.env.S3_ENABLE ? 'https://images.shinmccold.github.io/gblog' : '',
+        assetsPrefix: process.env.S3_ENABLE ? 'https://shinmccold.github.io/assets/' : '',
     },
 })
