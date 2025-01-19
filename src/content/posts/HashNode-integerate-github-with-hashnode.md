@@ -11,7 +11,7 @@ oldKeywords: ["ShinMcCold", "Hashnode", "Github", "Integrate"]
 ---
 
 I always wanted one place to write my blogs and publish them everywhere like on Hashnode or Medium (WIP). It's always time consuming to manually write and publish everywhere.
-
+ 
 So, I thought why not automate it ?   
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWRleHZxMjNxemhlNzgybWh3dG11MXN0Z3p1OGU0MXNqM3A1ZmFreiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1nR6fu93A17vWZbO9c/giphy.gif" alt="Automate GIF" width="350" height="200">
 
