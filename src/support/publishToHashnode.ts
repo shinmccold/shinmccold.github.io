@@ -117,8 +117,7 @@ async function checkForChanges() {
             })
             .filter(file => 
                 file.path.startsWith('src/content/posts/') &&
-                //TODO: Currently only checking for added files, modify files not updating later
-                file.working_dir === 'A'
+                (file.working_dir === 'A' || file.working_dir === 'M')
             );
 
         logger.info('Changed content files:' + JSON.stringify(changedFiles));
